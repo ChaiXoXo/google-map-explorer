@@ -1,0 +1,42 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-3 p-4 bg-dark bg-gradient text-light border-right">
+      <h3 class="text-center">Search and Filter</h3>
+
+      <div class="form-group">
+        <label for="search" class="form-label">Search Location:</label>
+        <input type="text" class="form-control" id="search" [(ngModel)]="searchQuery" (input)="filterMarkers()"
+          placeholder="Enter name...">
+      </div>
+
+      <div class="form-group mt-3">
+        <label for="category" class="form-label">Select Category:</label>
+        <select class="form-select" [(ngModel)]="selectedCategory" (change)="filterMarkers()">
+          <option value="">All Categories</option>
+          <option value="gym">Gym</option>
+          <option value="bar">Bar</option>
+          <option value="night_club">Night Club</option>
+          <option value="lodging">Lodging</option>
+          <option value="spa">Spa</option>
+          <option value="health">Health</option>
+          <option value="point_of_interest">Point of Interest</option>
+          <option value="establishment">Establishment</option>
+        </select>
+      </div>
+
+      <div class="form-group mt-3">
+        <label class="form-label">Rating:</label>
+      
+        <input type="range" class="form-range mt-2" min="0" max="5" step="0.5" [(ngModel)]="maxRating" (input)="filterMarkers()">
+        <span>Max/Min rating: {{ maxRating }}</span>
+      </div>
+    </div>
+
+    <div class="col-md-9 p-0">
+      <google-map [center]="center" [zoom]="zoom" [options]="{ mapTypeId: 'roadmap' }">
+        <map-marker *ngFor="let marker of filteredMarkers" [position]="marker.position" [title]="marker.title">
+        </map-marker>
+      </google-map>
+    </div>
+  </div>
+</div>
